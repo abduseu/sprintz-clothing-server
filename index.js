@@ -27,7 +27,19 @@ async function run() {
 	const database = client.db('sprintz_DB')
     const products = database.collection('products')
     
+    /* PRODUCTS START */
+    //Products >> Read
+    app.get('/products', async(req, res)=>{
+        const result = await products.find().toArray()
+        res.send(result)
+    })
 
+
+
+
+    /* PRODUCTS END */
+    /*  START */
+    /*  END */
 
 
     // Send a ping to confirm a successful connection
