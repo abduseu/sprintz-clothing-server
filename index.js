@@ -31,7 +31,7 @@ async function run() {
     /* PRODUCTS START */
     //Products >> Read
     app.get('/products', async (req, res) => {
-      const result = await products.find().toArray()
+      const result = await products.find().sort({_id: -1}).toArray()
       res.send(result)
     })
 
