@@ -26,6 +26,7 @@ async function run() {
     //Users code start from here:
     const database = client.db('sprintz_DB')
     const products = database.collection('products')
+    const shopping_cart = database.collection('shopping_cart')
 
     /* PRODUCTS START */
     //Products >> Read
@@ -76,8 +77,35 @@ async function run() {
 
 
     /* PRODUCTS END */
-    /*  START */
-    /*  END */
+
+
+    /* CART START */
+    //Cart >> Create
+    app.post('/cart', async (req, res) => {
+      const cart = req.body
+
+      const result = await shopping_cart.insertOne(cart)
+      res.send(result)
+    })
+
+    //Cart >> Read
+    app.get('/cart/:id', async (req, res) => {
+      const email = req.params.id
+
+      const filter = { userId: email }
+      const result = await shopping_cart.find(filter).toArray()
+      res.send(result)
+    })
+
+    //Cart/_id >> Delete
+    app.delete('/cart/:id', async (req, res) => {
+      const id = req.params.id
+
+      const filter = { _id: new ObjectId(id) }
+      const result = await shopping_cart.deleteOne(filter)
+      res.send(result)
+    })
+    /* CART END */
 
 
     // Send a ping to confirm a successful connection
