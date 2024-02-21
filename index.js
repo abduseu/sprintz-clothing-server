@@ -24,14 +24,22 @@ async function run() {
   try {
     // await client.connect();
     //Users code start from here:
-	const database = client.db('sprintz_DB')
+    const database = client.db('sprintz_DB')
     const products = database.collection('products')
-    
+
     /* PRODUCTS START */
     //Products >> Read
-    app.get('/products', async(req, res)=>{
-        const result = await products.find().toArray()
-        res.send(result)
+    app.get('/products', async (req, res) => {
+      const result = await products.find().toArray()
+      res.send(result)
+    })
+
+    //Products >> Create
+    app.post('/products', async (req, res) => {
+      const product = req.body
+
+      const result = await products.insertOne(product)
+      res.send(result)
     })
 
 
@@ -53,10 +61,10 @@ async function run() {
 run().catch(console.dir);
 
 
-app.get('/', (req, res)=>{
-    res.send('Welcome to express-server')
+app.get('/', (req, res) => {
+  res.send('Welcome to express-server')
 })
 
-app.listen(port, ()=>{
-    console.log(`express-server is running on ${port}`)
+app.listen(port, () => {
+  console.log(`express-server is running on ${port}`)
 })
